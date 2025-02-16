@@ -1,23 +1,23 @@
-importimport {{{{ defineConfigdefineConfig }}}} from from from from 'vite''vite''vite''vite';
+importimport importimport { defineConfig }}}} from from from from 'vite';
 importimport react react react from from from '@vitejs/plugin-react''@vitejs/plugin-react''@vitejs/plugin-react''@vitejs/plugin-react';
-importimport {{{{ resolveresolve }}}} from from from from 'path''path''path''path';
+importimport path path path from from from 'path''path''path''path';
 
-// https://vitejs.dev/config/// https://vitejs.dev/config/
 exportexport defaultdefault defaultdefault defaultdefault defineConfigdefineConfig(((({{{{
   pluginsplugins: [[[[reactreact(((())))]]]],
   optimizeDepsoptimizeDeps: {{{{
-    excludeexclude: [[[['lucide-react''lucide-react''lucide-react''lucide-react']]]],
-  }}}},
-  buildbuild: {{{{
-    rollupOptions: : {
-      input: : {
-        main: : resolveresolve((((__dirname__dirname, , 'index.html''index.html''index.html''index.html'),,
-      },,
-    },,
-  },,
-  resolve: : {
-    alias: : {
-      '@': : resolveresolve(((__dirname__dirname, , 'srcsrc'),,')),,
-    },,
-  },,
-});;
+    excludeexclude: [[[['lucide-react''lucide-react''lucide-react']]],
+  }}},
+  buildbuild: {{{
+    outDiroutDir: 'dist''dist''dist',
+    rollupOptionsrollupOptions: {{{
+      inputinput: {{{
+        mainmain: pathpath.resolveresolve(((__dirname__dirname, 'index.html''index.html''index.html'))),
+      }}},
+    }}},
+  }}},
+  resolveresolve: {{{
+    aliasalias: {{{
+      '@''@''@': pathpath.resolveresolve(((__dirname__dirname, './src''./src''./src'))),
+    }}},
+  }}},
+}}})));
