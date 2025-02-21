@@ -7,52 +7,95 @@ interface Tool {
   category: string;
   stars: number;
   users: number;
+  isFullR1: boolean;  // 是否支持满血R1
 }
 
 function App() {
   const tools: Tool[] = [
-    // Tech Giants
-    { name: "腾讯元宝", url: "https://yuanbao.tencent.com/chat/naQivTmsDa/b187e502-abe5-11ef-ab6b-5e7663991462", category: "Tech Giants", stars: 5, users: 50000 },
-    { name: "腾讯云-大模型知识引擎", url: "https://lke.cloud.tencent.com/webim_exp/#/chat/wQrAwR", category: "Tech Giants", stars: 4, users: 35000 },
-    { name: "支付宝百宝箱", url: "https://tbox.alipay.com/community", category: "Tech Giants", stars: 3, users: 18000 },
-    { name: "钉钉", url: "https://www.dingtalk.com/", category: "Tech Giants", stars: 4, users: 30000 },
-    { name: "ima", url: "https://ima.qq.com/", category: "Tech Giants", stars: 4, users: 28000 },
-    { name: "百度智能云，千帆", url: "https://console.bce.baidu.com/qianfan/ais/console/onlineTest/LLM/DeepSeek-R1", category: "Tech Giants", stars: 4, users: 10000 },
-    { name: "华为云", url: "https://console.huaweicloud.com/modelarts/", category: "Tech Giants", stars: 4, users: 9000 },
-    
-    // AI Platforms
-    { name: "AskManyAI", url: "https://askmanyai.cn/login", category: "AI Platforms", stars: 5, users: 45000 },
-    { name: "问小白", url: "https://www.wenxiaobai.com/chat/DeepseekR1", category: "AI Platforms", stars: 5, users: 40000 },
-    { name: "商汤大装置", url: "https://console.sensecore.cn/aistudio/experience/conversation?model=DeepSeek-R1", category: "AI Platforms", stars: 3, users: 20000 },
-    { name: "deepinfra", url: "https://deepinfra.com/deepseek-ai/DeepSeek-R1", category: "AI Platforms", stars: 3, users: 15000 },
-    { name: "无问芯穹", url: "https://cloud.infini-ai.com/genstudio", category: "AI Platforms", stars: 4, users: 6000 },
-    { name: "天工AI", url: "https://www.tiangong.cn/", category: "AI Platforms", stars: 3, users: 2000 },
-    
-    // Cloud Services
-    { name: "中国移动云盘", url: "https://yun.139.com/w/#/index", category: "Cloud Services", stars: 4, users: 10000 },
-    { name: "潞晨云", url: "https://cloud.luchentech.com/maas/modelMarket/9821543f-65d9-4557-bac9-d1208ddbfbf5?tab=playground", category: "Cloud Services", stars: 3, users: 5000 },
-    { name: "天翼云", url: "https://huiju.ctyun.cn/modelSquare/?regionId=200000001852", category: "Cloud Services", stars: 4, users: 8000 },
-    { name: "火山方舟", url: "https://www.volcengine.com/product/ark", category: "Cloud Services", stars: 3, users: 4000 },
-    
-    // International Platforms
-    { name: "Hugging Face", url: "https://huggingface.co/deepseek-ai/DeepSeek-R1", category: "International Platforms", stars: 4, users: 7000 },
-    { name: "Flowith", url: "https://flowith.io", category: "International Platforms", stars: 3, users: 2000 },
-    { name: "Merlin", url: "https://www.getmerlin.in/zh-CN", category: "International Platforms", stars: 4, users: 25000 },
-    { name: "Openrouter", url: "https://openrouter.ai/deepseek/deepseek-r1:free", category: "International Platforms", stars: 3, users: 1000 },
-    { name: "Perplexity", url: "https://www.perplexity.ai/", category: "International Platforms", stars: 4, users: 5000 },
-    { name: "POE", url: "https://poe.com", category: "International Platforms", stars: 3, users: 3000 },
-    { name: "Cursor", url: "https://cursor.com", category: "International Platforms", stars: 4, users: 4000 },
-    { name: "Cerebras", url: "https://cerebras.ai", category: "International Platforms", stars: 3, users: 2000 },
-    { name: "Groq", url: "https://groq.com/", category: "International Platforms", stars: 4, users: 5000 },
-    
-    // Other Services
-    { name: "秘塔搜索", url: "https://metaso.cn", category: "Other Services", stars: 4, users: 8000 },
-    { name: "知乎直答", url: "https://zhida.zhihu.com/", category: "Other Services", stars: 3, users: 5000 },
-    { name: "硅基流动&华为云", url: "https://siliconflow.cn/zh-cn/", category: "Other Services", stars: 4, users: 9000 },
-    { name: "扣子", url: "https://www.coze.cn/home", category: "Other Services", stars: 3, users: 4000 },
-    { name: "Monica AI", url: "https://monica.im/home/chat/Monica/monica", category: "Other Services", stars: 4, users: 7000 },
-    { name: "Chatbox", url: "https://web.chatboxai.app/", category: "Other Services", stars: 3, users: 3000 },
-    { name: "国家超算互联网平台", url: "https://www.scnet.cn/ui/mall/", category: "Other Services", stars: 4, users: 10000 },
+    // 5星工具 (4-5分)
+    { 
+      name: "腾讯元宝", 
+      url: "https://yuanbao.tencent.com/chat/naQivTmsDa/b187e502-abe5-11ef-ab6b-5e7663991462", 
+      category: "Tech Giants", 
+      stars: 5,
+      users: 50000,
+      isFullR1: true
+    },
+    { 
+      name: "腾讯云-大模型知识引擎", 
+      url: "https://lke.cloud.tencent.com/webim_exp/#/chat/wQrAwR", 
+      category: "Tech Giants", 
+      stars: 5,
+      users: 35000,
+      isFullR1: true
+    },
+    { 
+      name: "AskManyAI", 
+      url: "https://askmanyai.cn/login", 
+      category: "AI Platforms", 
+      stars: 5,
+      users: 45000,
+      isFullR1: true
+    },
+    { 
+      name: "问小白", 
+      url: "https://www.wenxiaobai.com/chat/DeepseekR1", 
+      category: "AI Platforms", 
+      stars: 5,
+      users: 40000,
+      isFullR1: true
+    },
+
+    // 4星工具
+    { 
+      name: "钉钉", 
+      url: "https://www.dingtalk.com/", 
+      category: "Tech Giants", 
+      stars: 4,
+      users: 30000,
+      isFullR1: true
+    },
+    { 
+      name: "ima", 
+      url: "https://ima.qq.com/", 
+      category: "Tech Giants", 
+      stars: 4,
+      users: 28000,
+      isFullR1: true
+    },
+    { 
+      name: "中国移动云盘", 
+      url: "https://yun.139.com/w/#/index", 
+      category: "Cloud Services", 
+      stars: 4,
+      users: 10000,
+      isFullR1: true
+    },
+
+    // 其他工具
+    { name: "百度智能云，千帆", url: "https://console.bce.baidu.com/qianfan/ais/console/onlineTest/LLM/DeepSeek-R1", category: "Tech Giants", stars: 4, users: 10000, isFullR1: true },
+    { name: "华为云", url: "https://console.huaweicloud.com/modelarts/", category: "Tech Giants", stars: 4, users: 9000, isFullR1: true },
+    { name: "商汤大装置", url: "https://console.sensecore.cn/aistudio/experience/conversation?model=DeepSeek-R1", category: "AI Platforms", stars: 3, users: 20000, isFullR1: true },
+    { name: "deepinfra", url: "https://deepinfra.com/deepseek-ai/DeepSeek-R1", category: "AI Platforms", stars: 3, users: 15000, isFullR1: true },
+    { name: "无问芯穹", url: "https://cloud.infini-ai.com/genstudio", category: "AI Platforms", stars: 4, users: 6000, isFullR1: true },
+    { name: "天工AI", url: "https://www.tiangong.cn/", category: "AI Platforms", stars: 3, users: 2000, isFullR1: true },
+    { name: "潞晨云", url: "https://cloud.luchentech.com/maas/modelMarket/9821543f-65d9-4557-bac9-d1208ddbfbf5?tab=playground", category: "Cloud Services", stars: 3, users: 5000, isFullR1: true },
+    { name: "天翼云", url: "https://huiju.ctyun.cn/modelSquare/?regionId=200000001852", category: "Cloud Services", stars: 4, users: 8000, isFullR1: true },
+    { name: "火山方舟", url: "https://www.volcengine.com/product/ark", category: "Cloud Services", stars: 3, users: 4000, isFullR1: true },
+    { name: "Hugging Face", url: "https://huggingface.co/deepseek-ai/DeepSeek-R1", category: "International Platforms", stars: 4, users: 7000, isFullR1: true },
+    { name: "Merlin", url: "https://www.getmerlin.in/zh-CN", category: "International Platforms", stars: 4, users: 25000, isFullR1: true },
+    { name: "Perplexity", url: "https://www.perplexity.ai/", category: "International Platforms", stars: 4, users: 5000, isFullR1: true },
+    { name: "POE", url: "https://poe.com", category: "International Platforms", stars: 3, users: 3000, isFullR1: true },
+    { name: "Cursor", url: "https://cursor.com", category: "International Platforms", stars: 4, users: 4000, isFullR1: true },
+    { name: "Cerebras", url: "https://cerebras.ai", category: "International Platforms", stars: 3, users: 2000, isFullR1: false },  // 蒸馏版
+    { name: "Groq", url: "https://groq.com/", category: "International Platforms", stars: 4, users: 5000, isFullR1: false },  // 蒸馏版
+    { name: "秘塔搜索", url: "https://metaso.cn", category: "Other Services", stars: 4, users: 8000, isFullR1: true },
+    { name: "知乎直答", url: "https://zhida.zhihu.com/", category: "Other Services", stars: 3, users: 5000, isFullR1: true },
+    { name: "硅基流动&华为云", url: "https://siliconflow.cn/zh-cn/", category: "Other Services", stars: 4, users: 9000, isFullR1: true },
+    { name: "扣子", url: "https://www.coze.cn/home", category: "Other Services", stars: 3, users: 4000, isFullR1: true },
+    { name: "Monica AI", url: "https://monica.im/home/chat/Monica/monica", category: "Other Services", stars: 4, users: 7000, isFullR1: true },
+    { name: "Chatbox", url: "https://web.chatboxai.app/", category: "Other Services", stars: 3, users: 3000, isFullR1: true },
+    { name: "国家超算互联网平台", url: "https://www.scnet.cn/ui/mall/", category: "Other Services", stars: 4, users: 10000, isFullR1: false }  // 蒸馏版
   ];
 
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -86,7 +129,12 @@ function App() {
               Deepseek工具站
             </h1>
           </div>
-          <p className="mt-2 text-slate-400">发现和访问最好的AI工具和服务</p>
+          <p className="mt-2 text-slate-400">
+            发现和访问最好的AI工具和服务
+            <span className="ml-2 text-sm">
+              (共 {tools.length} 个工具，其中 {tools.filter(t => t.isFullR1).length} 个支持满血R1)
+            </span>
+          </p>
         </div>
       </header>
 
@@ -134,8 +182,17 @@ function App() {
               <div className="flex flex-col gap-2">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
+                    <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors flex items-center gap-2">
                       {tool.name}
+                      {tool.isFullR1 ? (
+                        <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">
+                          满血R1
+                        </span>
+                      ) : (
+                        <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded">
+                          蒸馏版
+                        </span>
+                      )}
                     </h3>
                     <p className="mt-1 text-sm text-slate-400">{tool.category}</p>
                   </div>

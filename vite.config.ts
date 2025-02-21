@@ -47,15 +47,15 @@ export default defineConfig({
   
   // 开发服务器配置
   server: {
-    port: 3000,           // 端口号
-    strictPort: true,     // 端口被占用时直接退出
+    port: 3000,           // 默认端口
+    strictPort: false,    // 如果端口被占用，会自动尝试下一个可用端口
     host: true,           // 监听所有地址
   },
   
   // 预览配置
   preview: {
-    port: 3000,           // 预览服务器端口号
-    strictPort: true,     // 端口被占用时直接退出
+    port: 3000,           // 默认端口
+    strictPort: false,    // 如果端口被占用，会自动尝试下一个可用端口
     host: true,           // 监听所有地址
   },
 });
