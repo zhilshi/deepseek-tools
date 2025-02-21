@@ -1,10 +1,7 @@
-# 项目名称: deepseek-tools
-
-## 项目背景
-这是一个展示当前所有支持 deepseek 的 AI 工具和平台的导航站。代码托管在 GitHub 上，并在 Vercel 上进行部署。
+# Deepseek工具站
 
 ## 项目简介
-deepseek-tools 是一个基于 Vite 和 React 的前端应用程序，旨在提供各种在线工具的导航和访问。
+这是一个展示当前所有支持 Deepseek 的 AI 工具和平台的导航站。提供最全面的 Deepseek 模型应用导航，包括满血R1和V3版本。支持免费使用、直连访问。
 
 ## 技术栈
 - Vite
@@ -12,12 +9,15 @@ deepseek-tools 是一个基于 Vite 和 React 的前端应用程序，旨在提�
 - TypeScript
 - Tailwind CSS
 
-## 功能
-- 提供多种在线工具的链接，分为不同类别。
-- 使用 Tailwind CSS 进行样式管理。
-- 使用 Vercel 进行部署。
+## 功能特点
+- 展示所有支持 Deepseek 的工具和平台
+- 按类别分类展示（科技巨头、AI平台、云服务、国际平台、其他服务）
+- 支持搜索和分类筛选
+- 显示工具评分和用户数
+- 标记满血R1和蒸馏版本
+- SEO 优化
 
-## 安装和使用
+## 本地开发
 1. 克隆项目：
    ```bash
    git clone <repository-url>
@@ -44,11 +44,51 @@ deepseek-tools 是一个基于 Vite 和 React 的前端应用程序，旨在提�
    npm run preview
    ```
 
-## 部署
-- 使用 Vercel 进行自动化部署，配置文件为 `vercel.json`。
+## 部署指南
 
-## 贡献
-欢迎贡献代码！请提交 Pull Request 或报告问题。
+### Vercel 部署
+1. Fork 本项目到你的 GitHub
+2. 在 Vercel 中导入项目
+3. 选择 GitHub 仓库
+4. 使用以下配置：
+   - Framework Preset: Vite
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+5. 点击 Deploy 开始部署
+
+### Netlify 部署
+1. Fork 本项目到你的 GitHub
+2. 在 Netlify 中点击 "New site from Git"
+3. 选择 GitHub 仓库
+4. 使用以下配置：
+   - Build Command: `npm run build`
+   - Publish Directory: `dist`
+   - Node version: `18.x` (或更高)
+5. 点击 Deploy site 开始部署
+
+## 环境要求
+- Node.js 18.x 或更高版本
+- npm 9.x 或更高版本
+
+## 项目结构
+```
+deepseek-tools/
+├── public/              # 静态资源
+├── src/                 # 源代码
+│   ├── App.tsx         # 主应用组件
+│   ├── main.tsx        # 入口文件
+│   └── index.css       # 全局样式
+├── index.html          # HTML 模板
+├── vite.config.ts      # Vite 配置
+├── package.json        # 项目配置
+└── README.md           # 项目说明
+```
+
+## 贡献指南
+欢迎提交 Pull Request 或提出 Issue。
 
 ## 许可证
-MIT License 
+MIT License
+
+## 联系方式
+如有问题或建议，请提交 Issue 或 PR。 
