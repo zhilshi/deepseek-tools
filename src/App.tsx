@@ -227,11 +227,14 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 py-6">
           <p className="text-center text-slate-400">© 2024 Deepseek工具站 - 您的AI工具导航</p>
           <div className="mt-4 text-center text-sm text-slate-500">
-            <span className="mx-2">满血R1</span>
-            <span className="mx-2">DeepseekV3</span>
-            <span className="mx-2">免费AI工具</span>
-            <span className="mx-2">直连访问</span>
-            <span className="mx-2">中文AI模型</span>
+            <a href="#" className="mx-2 hover:text-blue-400">满血R1</a>
+            <a href="#" className="mx-2 hover:text-blue-400">DeepseekV3</a>
+            <a href="#" className="mx-2 hover:text-blue-400">免费AI工具</a>
+            <a href="#" className="mx-2 hover:text-blue-400">直连访问</a>
+            <a href="#" className="mx-2 hover:text-blue-400">中文AI模型</a>
+            <a href="#" className="mx-2 hover:text-blue-400">腾讯元宝</a>
+            <a href="#" className="mx-2 hover:text-blue-400">AskManyAI</a>
+            <a href="#" className="mx-2 hover:text-blue-400">问小白</a>
           </div>
         </div>
       </footer>

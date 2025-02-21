@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "cp -r public/* dist/ || true",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

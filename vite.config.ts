@@ -36,6 +36,7 @@ export default defineConfig({
         drop_debugger: true,   // 移除 debugger
       },
     },
+    copyPublicDir: true,
   },
   
   // 路径解析配置

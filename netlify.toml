@@ -7,10 +7,14 @@
   to = "/index.html"
   status = 200
 
-[build.environment]
-  NODE_VERSION = "16"
+# 添加静态文件处理
+[[headers]]
+  for = "/BingSiteAuth.xml"
+  [headers.values]
+    Content-Type = "application/xml"
+    Access-Control-Allow-Origin = "*"
 
-# 启用 Brotli 和 Gzip 压缩
+# 确保静态文件被复制
 [build.processing]
   skip_processing = false
 [build.processing.css]
@@ -24,6 +28,7 @@
 [build.processing.images]
   compress = true
 
+# 添加插件来处理静态文件
 [[plugins]]
   package = "@netlify/plugin-sitemap"
 
@@ -31,4 +36,7 @@
   buildDir = "dist"
   prettyURLs = true
   changeFreq = "daily"
-  priority = 0.8 
+  priority = 0.8
+
+[build.environment]
+  NODE_VERSION = "16" 
