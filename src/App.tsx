@@ -175,8 +175,8 @@ function App() {
             </h1>
             
             <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto">
-              精心策划的领先 AI 驱动工具集合。
-              <br />由人类精选。
+              精心策划的领先DeepSeek驱动工具集合
+              <br />最好的选择
             </p>
           </div>
         </div>
