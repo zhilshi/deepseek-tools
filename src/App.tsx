@@ -10,6 +10,13 @@ interface Tool {
   isFullR1: boolean;  // 是否支持满血R1
 }
 
+// 声明全局trackToolClick函数类型
+declare global {
+  interface Window {
+    trackToolClick?: (toolName: string, toolCategory: string) => void;
+  }
+}
+
 function App() {
   const tools: Tool[] = [
     // 5星工具 (4-5分)
@@ -118,6 +125,14 @@ function App() {
       return b.users - a.users;
     });
 
+  // 处理工具点击事件
+  const handleToolClick = (tool: Tool, event: React.MouseEvent<HTMLAnchorElement>) => {
+    // 如果trackToolClick函数存在，则调用它记录点击事件
+    if (window.trackToolClick) {
+      window.trackToolClick(tool.name, tool.category);
+    }
+  };
+
   return (
     <div className="min-h-screen">
       {/* Header */}
@@ -178,6 +193,7 @@ function App() {
               href={tool.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(e) => handleToolClick(tool, e)}
               className="group bg-slate-800/50 backdrop-blur-lg border border-slate-700 p-6 rounded-lg
                        hover:bg-slate-700/50 transition-all duration-300 hover:scale-[1.02]
                        hover:border-blue-500/50"

@@ -24,6 +24,25 @@
     <meta name="baidu-site-verification" content="code-xxxxx" />
     <!-- 添加 SiteMap 链接 -->
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    
+    <!-- Google Analytics (GA4) 跟踪代码 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-NNDW58WWSP');
+      
+      // 定义全局函数用于跟踪工具点击
+      window.trackToolClick = function(toolName, toolCategory) {
+        gtag('event', 'tool_click', {
+          'tool_name': toolName,
+          'tool_category': toolCategory,
+          'event_category': 'engagement',
+          'event_label': toolName
+        });
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
