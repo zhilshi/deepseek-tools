@@ -588,13 +588,12 @@ function App() {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-slate-800">
-                <p className="text-slate-500 text-sm">
-                  {t.about.stats
+                <p className="text-slate-500 text-sm" dangerouslySetInnerHTML={{ 
+                  __html: t.about.stats
                     .replace('{toolsCount}', `<span class="text-blue-400 font-medium">${tools.length}</span>`)
                     .replace('{fullR1Count}', `<span class="text-blue-400 font-medium">${tools.filter(t => t.isFullR1).length}</span>`)
                     .replace('{categoriesCount}', `<span class="text-blue-400 font-medium">${categories.length - 1}</span>`)
-                  }
-                </p>
+                }} />
               </div>
             </div>
           </div>
