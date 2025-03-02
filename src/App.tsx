@@ -112,7 +112,7 @@ function App() {
 
   const [searchTerm, setSearchTerm] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
-
+  
   const categories = ["All", ...new Set(tools.map(tool => tool.category))].sort();
   
   // 按类别对工具进行分组
@@ -185,27 +185,38 @@ function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8" role="main" aria-label="Deepseek工具列表">
         {/* Search and Filter */}
-        <div className="mb-12 max-w-2xl mx-auto">
-          <div className="relative flex items-center">
-            <Search className="absolute left-4 text-slate-400" size={20} />
-            <input
-              type="text"
-              placeholder="搜索工具..."
-              className="w-full pl-12 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-full
-                       focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <select
-              className="absolute right-3 px-4 py-1.5 bg-slate-800 border border-slate-600 rounded-full
-                       focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {categories.map(category => (
-                <option key={category} value={category} className="bg-slate-800">{category}</option>
-              ))}
-            </select>
+        <div className="mb-16 max-w-4xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <div className="flex items-center bg-slate-900 border border-slate-800 rounded-full overflow-hidden pl-5 pr-2 py-3">
+                <Search className="text-slate-400 mr-3" size={20} />
+                <input
+                  type="text"
+                  placeholder="搜索AI工具..."
+                  className="bg-transparent border-none outline-none flex-1 text-white placeholder-slate-400 text-base"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+            </div>
+            
+            <div className="relative w-full md:w-64">
+              <select
+                className="appearance-none bg-slate-900 border border-slate-800 rounded-full px-6 py-3 text-white w-full
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {categories.map(category => (
+                  <option key={category} value={category} className="bg-slate-900">{category}</option>
+                ))}
+              </select>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
 
