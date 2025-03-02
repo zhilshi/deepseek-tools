@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, ExternalLink, Sparkles, Star, Users } from 'lucide-react';
+import { Search, ExternalLink, Sparkles, Star, Users, Globe } from 'lucide-react';
 import { deepseekIntegrations } from '../deepseek_integrations';
 
 interface Tool {
@@ -17,6 +17,128 @@ declare global {
     trackToolClick?: (toolName: string, toolCategory: string) => void;
   }
 }
+
+// 语言文本配置
+interface LanguageTexts {
+  header: {
+    toolsCount: string;
+    title: string;
+    subtitle: string;
+  };
+  search: {
+    placeholder: string;
+  };
+  intro: {
+    text: string;
+  };
+  popularTools: {
+    title: string;
+  };
+  categories: {
+    notFound: string;
+  };
+  quickNav: {
+    title: string;
+    toolsCount: string;
+  };
+  about: {
+    title: string;
+    description1: string;
+    description2: string;
+    stats: string;
+    tools: string;
+    fullR1: string;
+    categories: string;
+  };
+  footer: {
+    copyright: string;
+  };
+  labels: {
+    fullR1: string;
+    distilled: string;
+  };
+}
+
+const translations: Record<string, LanguageTexts> = {
+  zh: {
+    header: {
+      toolsCount: "{count} 个 Deepseek 工具，其中 {fullR1Count} 个支持满血R1",
+      title: "Deepseek AI 工具导航",
+      subtitle: "最全面的 Deepseek 满血R1 和 V3 模型应用集合\n免费直连，无需魔法，中文AI大模型首选"
+    },
+    search: {
+      placeholder: "搜索Deepseek AI工具、应用和服务..."
+    },
+    intro: {
+      text: "欢迎使用<strong>Deepseek工具站</strong>，这里汇集了最全面的Deepseek AI应用和服务。无论您是寻找<strong>满血R1</strong>还是<strong>DeepseekV3</strong>模型，我们都提供了最佳选择。所有工具支持<strong>免费使用</strong>和<strong>直连访问</strong>，无需科学上网。从<strong>腾讯元宝</strong>到<strong>AskManyAI</strong>，从<strong>问小白</strong>到各种<strong>浏览器扩展</strong>和<strong>VS Code插件</strong>，这里应有尽有。"
+    },
+    popularTools: {
+      title: "热门推荐工具"
+    },
+    categories: {
+      notFound: "没有找到匹配的工具"
+    },
+    quickNav: {
+      title: "热门Deepseek AI工具分类",
+      toolsCount: "{count}个工具"
+    },
+    about: {
+      title: "关于Deepseek工具站",
+      description1: "Deepseek工具站是最全面的Deepseek AI模型应用导航平台，提供满血R1和V3版本的各类应用工具，支持免费使用、直连访问，无需魔法。我们精心收集和整理了各类Deepseek模型应用，包括科技巨头提供的服务、专业AI平台、云服务以及国际平台等多种类型。",
+      description2: "无论您是AI爱好者、开发者还是普通用户，都能在这里找到适合自己的Deepseek工具。我们会持续更新收录最新的Deepseek应用，确保您能够第一时间体验到最新的AI技术进展。",
+      stats: "已收录 {toolsCount} 个工具 · {fullR1Count} 个满血R1 · {categoriesCount} 个分类",
+      tools: "个工具",
+      fullR1: "个满血R1",
+      categories: "个分类"
+    },
+    footer: {
+      copyright: "© 2024 Deepseek工具站 - 您的AI工具导航 | 最全面的Deepseek模型应用集合"
+    },
+    labels: {
+      fullR1: "满血R1",
+      distilled: "蒸馏版"
+    }
+  },
+  en: {
+    header: {
+      toolsCount: "{count} Deepseek tools, {fullR1Count} with full R1 support",
+      title: "Deepseek AI Tools Navigator",
+      subtitle: "The most comprehensive collection of Deepseek R1 and V3 model applications\nFree direct access, no VPN needed, Chinese AI model of choice"
+    },
+    search: {
+      placeholder: "Search Deepseek AI tools, apps and services..."
+    },
+    intro: {
+      text: "Welcome to the <strong>Deepseek Tools Hub</strong>, featuring the most comprehensive collection of Deepseek AI applications and services. Whether you're looking for <strong>full R1</strong> or <strong>DeepseekV3</strong> models, we offer the best options. All tools support <strong>free usage</strong> and <strong>direct access</strong> without VPN. From <strong>Tencent Yuanbao</strong> to <strong>AskManyAI</strong>, from <strong>Wenxiaobai</strong> to various <strong>browser extensions</strong> and <strong>VS Code plugins</strong>, we have it all."
+    },
+    popularTools: {
+      title: "Popular Recommended Tools"
+    },
+    categories: {
+      notFound: "No matching tools found"
+    },
+    quickNav: {
+      title: "Popular Deepseek AI Tool Categories",
+      toolsCount: "{count} tools"
+    },
+    about: {
+      title: "About Deepseek Tools Hub",
+      description1: "Deepseek Tools Hub is the most comprehensive Deepseek AI model application navigation platform, offering full R1 and V3 versions of various application tools, supporting free use and direct access without VPN. We carefully collect and organize various Deepseek model applications, including services provided by tech giants, professional AI platforms, cloud services, and international platforms.",
+      description2: "Whether you're an AI enthusiast, developer, or regular user, you can find suitable Deepseek tools here. We continuously update and include the latest Deepseek applications to ensure you can experience the latest AI technology advancements firsthand.",
+      stats: "Collected {toolsCount} tools · {fullR1Count} full R1 · {categoriesCount} categories",
+      tools: "tools",
+      fullR1: "full R1",
+      categories: "categories"
+    },
+    footer: {
+      copyright: "© 2024 Deepseek Tools Hub - Your AI Tool Navigator | The most comprehensive collection of Deepseek model applications"
+    },
+    labels: {
+      fullR1: "Full R1",
+      distilled: "Distilled"
+    }
+  }
+};
 
 function App() {
   // 合并原有工具和deepseek集成工具
@@ -112,6 +234,72 @@ function App() {
 
   const [searchTerm, setSearchTerm] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
+  
+  // 添加语言状态
+  const [language, setLanguage] = React.useState<string>(() => {
+    // 获取浏览器语言
+    const browserLang = navigator.language.split('-')[0];
+    // 检查是否支持该语言，如果不支持则默认使用中文
+    return ['zh', 'en'].includes(browserLang) ? browserLang : 'zh';
+  });
+  
+  // 获取当前语言的文本
+  const t = translations[language];
+
+  // 添加类别翻译映射
+  const categoryTranslations: Record<string, string> = {
+    "科技巨头": "Tech Giants",
+    "AI平台": "AI Platforms",
+    "云服务": "Cloud Services",
+    "国际平台": "International Platforms",
+    "其他服务": "Other Services",
+    "应用程序": "Applications",
+    "AI代理框架": "AI Agent Frameworks",
+    "RAG框架": "RAG Frameworks",
+    "浏览器扩展": "Browser Extensions",
+    "VS Code扩展": "VS Code Extensions",
+    "原生AI代码编辑器": "Native AI Code Editors",
+    "其他工具": "Other Tools"
+  };
+
+  // 获取类别名称，根据当前语言返回对应的翻译
+  const getCategoryName = (category: string) => {
+    if (language === 'en' && categoryTranslations[category]) {
+      return categoryTranslations[category];
+    }
+    return category;
+  };
+
+  // 获取工具名称，根据当前语言返回对应的翻译
+  const getToolName = (name: string) => {
+    // 这里可以添加工具名称的翻译，但由于大部分是专有名词，暂时保持原样
+    // 只翻译几个明显的中文名称
+    if (language === 'en') {
+      const toolTranslations: Record<string, string> = {
+        "腾讯元宝": "Tencent Yuanbao",
+        "腾讯云-大模型知识引擎": "Tencent Cloud - LLM Knowledge Engine",
+        "问小白": "Wenxiaobai",
+        "钉钉": "DingTalk",
+        "中国移动云盘": "China Mobile Cloud Drive",
+        "百度智能云，千帆": "Baidu Intelligent Cloud, Qianfan",
+        "华为云": "Huawei Cloud",
+        "商汤大装置": "SenseTime Large Model",
+        "无问芯穹": "Infini-AI",
+        "天工AI": "Tiangong AI",
+        "潞晨云": "Luchen Cloud",
+        "天翼云": "Tianyi Cloud",
+        "火山方舟": "Volcano Engine Ark",
+        "秘塔搜索": "Metaso Search",
+        "知乎直答": "Zhihu Direct Answer",
+        "硅基流动&华为云": "Silicon Flow & Huawei Cloud",
+        "扣子": "Coze",
+        "国家超算互联网平台": "National Supercomputing Internet Platform",
+        "划词翻译": "Selection Translator"
+      };
+      return toolTranslations[name] || name;
+    }
+    return name;
+  };
 
   const categories = ["All", ...new Set(tools.map(tool => tool.category))].sort();
   
@@ -158,32 +346,48 @@ function App() {
       window.trackToolClick(tool.name, tool.category);
     }
   };
+  
+  // 切换语言
+  const toggleLanguage = () => {
+    setLanguage(prev => prev === 'zh' ? 'en' : 'zh');
+  };
 
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
       <header className="bg-black border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 py-12">
+          {/* 语言切换按钮 */}
+          <div className="absolute top-4 right-4 md:top-8 md:right-8">
+            <button 
+              onClick={toggleLanguage}
+              className="flex items-center bg-slate-800 hover:bg-slate-700 text-white px-3 py-2 rounded-full transition-colors"
+              aria-label={language === 'zh' ? "Switch to English" : "切换到中文"}
+            >
+              <Globe size={16} className="mr-2" />
+              <span>{language === 'zh' ? 'English' : '中文'}</span>
+            </button>
+          </div>
+          
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center bg-blue-500/10 text-blue-400 px-4 py-2 rounded-full text-sm mb-6">
               <span className="mr-2 w-2 h-2 bg-green-400 rounded-full inline-block"></span>
-              {tools.length} 个 Deepseek 工具，其中 {tools.filter(t => t.isFullR1).length} 个支持满血R1
+              {t.header.toolsCount.replace('{count}', tools.length.toString()).replace('{fullR1Count}', tools.filter(t => t.isFullR1).length.toString())}
             </div>
             
             <h1 className="text-4xl md:text-6xl font-bold text-blue-200 mb-4">
-              Deepseek AI 工具导航
+              {t.header.title}
             </h1>
             
-            <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto">
-              最全面的 Deepseek 满血R1 和 V3 模型应用集合
-              <br />免费直连，无需魔法，中文AI大模型首选
+            <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto whitespace-pre-line">
+              {t.header.subtitle}
             </p>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8" role="main" aria-label="Deepseek AI工具导航">
+      <main className="max-w-7xl mx-auto px-4 py-8" role="main" aria-label={t.header.title}>
         {/* 搜索和热门区域容器 */}
         <div className="bg-slate-900/30 rounded-2xl border border-slate-800 p-6 mb-12">
           {/* 搜索和筛选 */}
@@ -194,11 +398,11 @@ function App() {
                   <Search className="text-slate-400 mr-3" size={20} />
                   <input
                     type="text"
-                    placeholder="搜索Deepseek AI工具、应用和服务..."
+                    placeholder={t.search.placeholder}
                     className="bg-transparent border-none outline-none flex-1 text-white placeholder-slate-400 text-base"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    aria-label="搜索Deepseek AI工具"
+                    aria-label={t.search.placeholder}
                   />
                 </div>
               </div>
@@ -209,10 +413,12 @@ function App() {
                            focus:outline-none focus:ring-2 focus:ring-blue-500"
                   value={selectedCategory}
                   onChange={(e) => setSelectedCategory(e.target.value)}
-                  aria-label="选择工具类别"
+                  aria-label={language === 'zh' ? "选择工具类别" : "Select tool category"}
                 >
                   {categories.map(category => (
-                    <option key={category} value={category} className="bg-slate-900">{category}</option>
+                    <option key={category} value={category} className="bg-slate-900">
+                      {category === "All" ? (language === 'zh' ? "全部" : "All") : getCategoryName(category)}
+                    </option>
                   ))}
                 </select>
                 <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -226,9 +432,7 @@ function App() {
 
           {/* SEO优化介绍段落 */}
           <div className="mb-8 border-b border-slate-800 pb-8">
-            <p className="text-slate-400 text-base leading-relaxed">
-              欢迎使用<strong className="text-blue-300">Deepseek工具站</strong>，这里汇集了最全面的Deepseek AI应用和服务。无论您是寻找<strong className="text-blue-300">满血R1</strong>还是<strong className="text-blue-300">DeepseekV3</strong>模型，我们都提供了最佳选择。所有工具支持<strong className="text-blue-300">免费使用</strong>和<strong className="text-blue-300">直连访问</strong>，无需科学上网。从<strong className="text-blue-300">腾讯元宝</strong>到<strong className="text-blue-300">AskManyAI</strong>，从<strong className="text-blue-300">问小白</strong>到各种<strong className="text-blue-300">浏览器扩展</strong>和<strong className="text-blue-300">VS Code插件</strong>，这里应有尽有。
-            </p>
+            <p className="text-slate-400 text-base leading-relaxed" dangerouslySetInnerHTML={{ __html: t.intro.text.replace(/<strong>/g, '<strong class="text-blue-300">') }} />
           </div>
 
           {/* 热门工具区域 */}
@@ -239,7 +443,7 @@ function App() {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
               </span>
-              热门推荐工具
+              {t.popularTools.title}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
               {tools.filter(t => t.stars >= 4).slice(0, 5).map((tool, index) => (
@@ -255,12 +459,12 @@ function App() {
                     {index + 1}
                   </span>
                   <div className="flex flex-col flex-1 min-w-0">
-                    <span className="font-medium truncate">{tool.name}</span>
-                    <span className="text-xs text-slate-500">{tool.category}</span>
+                    <span className="font-medium truncate">{getToolName(tool.name)}</span>
+                    <span className="text-xs text-slate-500">{getCategoryName(tool.category)}</span>
                   </div>
                   {tool.isFullR1 && (
                     <span className="ml-2 shrink-0 text-xs bg-blue-500/10 text-blue-400 px-1.5 py-0.5 rounded-full">
-                      满血R1
+                      {t.labels.fullR1}
                     </span>
                   )}
                 </a>
@@ -274,64 +478,64 @@ function App() {
           sortedCategories.map(category => (
             <div key={category} className="mb-16">
               <h2 className="text-2xl font-bold text-white mb-8 pb-2 border-b border-slate-800" id={`category-${category.toLowerCase().replace(/\s+/g, '-')}`}>
-                {category} <span className="text-sm font-normal text-slate-400">({groupedTools[category].length})</span>
+                {getCategoryName(category)} <span className="text-sm font-normal text-slate-400">({groupedTools[category].length})</span>
               </h2>
               
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {groupedTools[category].map((tool, index) => (
-            <a
+                  <a
                     key={`${category}-${index}`}
-              href={tool.url}
-              target="_blank"
-              rel="noopener noreferrer"
+                    href={tool.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     onClick={(e) => handleToolClick(tool, e)}
                     className="group bg-slate-900 border border-slate-800 p-6 rounded-xl
                              hover:bg-slate-800 transition-all duration-300 hover:scale-[1.02]
                              hover:border-blue-500/30"
-                    aria-label={`访问${tool.name} - ${tool.isFullR1 ? '满血R1' : '蒸馏版'}`}
-            >
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-start">
-                  <div>
+                    aria-label={`${language === 'zh' ? '访问' : 'Visit'} ${getToolName(tool.name)} - ${tool.isFullR1 ? t.labels.fullR1 : t.labels.distilled}`}
+                  >
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between items-start">
+                        <div>
                           <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors flex items-center gap-2">
-                      {tool.name}
-                      {tool.isFullR1 ? (
+                            {getToolName(tool.name)}
+                            {tool.isFullR1 ? (
                               <span className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">
-                          满血R1
-                        </span>
-                      ) : (
+                                {t.labels.fullR1}
+                              </span>
+                            ) : (
                               <span className="text-xs bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full">
-                          蒸馏版
-                        </span>
-                      )}
-                    </h3>
-                  </div>
+                                {t.labels.distilled}
+                              </span>
+                            )}
+                          </h3>
+                        </div>
                         <ExternalLink className="text-slate-500 group-hover:text-blue-400 transition-colors" size={18} />
-                </div>
-                
-                <div className="flex items-center gap-4 mt-2">
-                  <div className="flex items-center gap-1">
-                    <Star className="text-yellow-400" size={16} />
+                      </div>
+                      
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="flex items-center gap-1">
+                          <Star className="text-yellow-400" size={16} />
                           <span className="text-sm text-slate-400">{tool.stars.toFixed(1)}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="text-blue-400" size={16} />
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="text-blue-400" size={16} />
                           <span className="text-sm text-slate-400">
-                      {tool.users >= 1000 
-                        ? `${(tool.users / 1000).toFixed(1)}k` 
-                        : tool.users}
-                    </span>
-                  </div>
-                </div>
+                            {tool.users >= 1000 
+                              ? `${(tool.users / 1000).toFixed(1)}k` 
+                              : tool.users}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                ))}
               </div>
-            </a>
-          ))}
-        </div>
             </div>
           ))
         ) : (
           <div className="text-center py-16">
-            <p className="text-slate-400 text-lg">没有找到匹配的工具</p>
+            <p className="text-slate-400 text-lg">{t.categories.notFound}</p>
           </div>
         )}
       </main>
@@ -339,7 +543,7 @@ function App() {
       {/* 类别快速导航 */}
       <section className="bg-slate-900/50 py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-white mb-8 text-center">热门Deepseek AI工具分类</h2>
+          <h2 className="text-2xl font-bold text-white mb-8 text-center">{t.quickNav.title}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {sortedCategories.map(category => (
               <a 
@@ -347,8 +551,10 @@ function App() {
                 href={`#category-${category.toLowerCase().replace(/\s+/g, '-')}`}
                 className="bg-slate-800 hover:bg-slate-700 p-4 rounded-lg text-center transition-colors"
               >
-                <span className="text-white font-medium">{category}</span>
-                <span className="block text-sm text-slate-400 mt-1">({groupedTools[category].length}个工具)</span>
+                <span className="text-white font-medium">{getCategoryName(category)}</span>
+                <span className="block text-sm text-slate-400 mt-1">
+                  ({t.quickNav.toolsCount.replace('{count}', groupedTools[category].length.toString())})
+                </span>
               </a>
             ))}
           </div>
@@ -367,25 +573,27 @@ function App() {
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                   </svg>
                 </span>
-                关于Deepseek工具站
+                {t.about.title}
               </h3>
               <div className="md:flex md:gap-8">
                 <div className="md:flex-1">
                   <p className="text-slate-400 leading-relaxed">
-                    Deepseek工具站是最全面的Deepseek AI模型应用导航平台，提供满血R1和V3版本的各类应用工具，支持免费使用、直连访问，无需魔法。我们精心收集和整理了各类Deepseek模型应用，包括科技巨头提供的服务、专业AI平台、云服务以及国际平台等多种类型。
+                    {t.about.description1}
                   </p>
                 </div>
                 <div className="md:flex-1 mt-4 md:mt-0">
                   <p className="text-slate-400 leading-relaxed">
-                    无论您是AI爱好者、开发者还是普通用户，都能在这里找到适合自己的Deepseek工具。我们会持续更新收录最新的Deepseek应用，确保您能够第一时间体验到最新的AI技术进展。
+                    {t.about.description2}
                   </p>
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-slate-800">
                 <p className="text-slate-500 text-sm">
-                  已收录 <span className="text-blue-400 font-medium">{tools.length}</span> 个工具
-                  · <span className="text-blue-400 font-medium">{tools.filter(t => t.isFullR1).length}</span> 个满血R1
-                  · <span className="text-blue-400 font-medium">{categories.length - 1}</span> 个分类
+                  {t.about.stats
+                    .replace('{toolsCount}', `<span class="text-blue-400 font-medium">${tools.length}</span>`)
+                    .replace('{fullR1Count}', `<span class="text-blue-400 font-medium">${tools.filter(t => t.isFullR1).length}</span>`)
+                    .replace('{categoriesCount}', `<span class="text-blue-400 font-medium">${categories.length - 1}</span>`)
+                  }
                 </p>
               </div>
             </div>
@@ -393,7 +601,7 @@ function App() {
           
           <div className="border-t border-slate-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center">
-              <p className="text-slate-400 mb-4 md:mb-0">© 2024 Deepseek工具站 - 您的AI工具导航 | 最全面的Deepseek模型应用集合</p>
+              <p className="text-slate-400 mb-4 md:mb-0">{t.footer.copyright}</p>
               <div className="flex space-x-4">
                 <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
