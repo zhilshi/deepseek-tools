@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, ExternalLink, Sparkles, Star, Users } from 'lucide-react';
+import { deepseekIntegrations } from '../deepseek_integrations';
 
 interface Tool {
   name: string;
@@ -18,7 +19,8 @@ declare global {
 }
 
 function App() {
-  const tools: Tool[] = [
+  // 合并原有工具和deepseek集成工具
+  const originalTools: Tool[] = [
     // 5星工具 (4-5分)
     { 
       name: "腾讯元宝", 
@@ -105,25 +107,49 @@ function App() {
     { name: "国家超算互联网平台", url: "https://www.scnet.cn/ui/mall/", category: "其他服务", stars: 4, users: 10000, isFullR1: false }  // 蒸馏版
   ];
 
+  // 合并工具列表
+  const tools: Tool[] = [...originalTools, ...deepseekIntegrations];
+
   const [searchTerm, setSearchTerm] = React.useState("");
   const [selectedCategory, setSelectedCategory] = React.useState("All");
 
-  const categories = ["All", ...new Set(tools.map(tool => tool.category))];
+  const categories = ["All", ...new Set(tools.map(tool => tool.category))].sort();
   
-  const filteredTools = tools
-    .filter(tool => {
-      const matchesSearch = tool.name.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesCategory = selectedCategory === "All" || tool.category === selectedCategory;
-      return matchesSearch && matchesCategory;
-    })
-    .sort((a, b) => {
-      // 首先按星级排序
-      if (b.stars !== a.stars) {
-        return b.stars - a.stars;
+  // 按类别对工具进行分组
+  const groupedTools = React.useMemo(() => {
+    const filtered = tools.filter(tool => 
+      tool.name.toLowerCase().includes(searchTerm.toLowerCase()) && 
+      (selectedCategory === "All" || tool.category === selectedCategory)
+    );
+    
+    // 按类别分组
+    const grouped = filtered.reduce((acc, tool) => {
+      if (!acc[tool.category]) {
+        acc[tool.category] = [];
       }
-      // 星级相同时按用户数排序
-      return b.users - a.users;
+      acc[tool.category].push(tool);
+      return acc;
+    }, {} as Record<string, Tool[]>);
+    
+    // 对每个类别内的工具进行排序
+    Object.keys(grouped).forEach(category => {
+      grouped[category].sort((a, b) => {
+        // 首先按星级排序
+        if (b.stars !== a.stars) {
+          return b.stars - a.stars;
+        }
+        // 星级相同时按用户数排序
+        return b.users - a.users;
+      });
     });
+    
+    return grouped;
+  }, [tools, searchTerm, selectedCategory]);
+  
+  // 对类别进行排序
+  const sortedCategories = React.useMemo(() => {
+    return Object.keys(groupedTools).sort();
+  }, [groupedTools]);
 
   // 处理工具点击事件
   const handleToolClick = (tool: Tool, event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -134,123 +160,134 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <header className="bg-slate-800/50 backdrop-blur-lg border-b border-slate-700">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-2">
-            <Sparkles className="text-blue-400" size={32} />
-            <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400">
-              Deepseek工具站
+      <header className="bg-black border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 py-16">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center bg-blue-500/10 text-blue-400 px-4 py-2 rounded-full text-sm mb-8">
+              <span className="mr-2 w-2 h-2 bg-green-400 rounded-full inline-block"></span>
+              {tools.length} 个 Deepseek 工具，其中 {tools.filter(t => t.isFullR1).length} 个支持满血R1
+            </div>
+            
+            <h1 className="text-5xl md:text-7xl font-bold text-blue-200 mb-6">
+              探索顶级 AI 工具
             </h1>
+            
+            <p className="text-xl md:text-2xl text-slate-400 max-w-3xl mx-auto">
+              精心策划的领先 AI 驱动工具集合。
+              <br />由人类精选。
+            </p>
           </div>
-          <p className="mt-2 text-slate-400">
-            发现和访问最好的 Deepseek AI 工具和服务
-            <span className="ml-2 text-sm">
-              (共 {tools.length} 个工具，其中 {tools.filter(t => t.isFullR1).length} 个支持满血R1)
-            </span>
-          </p>
-          <p className="mt-2 text-sm text-slate-500">
-            提供最全面的 Deepseek 模型应用导航，包括满血R1和V3版本。支持免费使用、直连访问，无需魔法。
-          </p>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-8" role="main" aria-label="Deepseek工具列表">
         {/* Search and Filter */}
-        <div className="mb-8 flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+        <div className="mb-12 max-w-2xl mx-auto">
+          <div className="relative flex items-center">
+            <Search className="absolute left-4 text-slate-400" size={20} />
             <input
               type="text"
               placeholder="搜索工具..."
-              className="w-full pl-10 pr-4 py-2 bg-slate-800/50 border border-slate-700 rounded-lg 
-                       focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400
-                       backdrop-blur-lg"
+              className="w-full pl-12 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-full
+                       focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white placeholder-slate-400"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
+            <select
+              className="absolute right-3 px-4 py-1.5 bg-slate-800 border border-slate-600 rounded-full
+                       focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              {categories.map(category => (
+                <option key={category} value={category} className="bg-slate-800">{category}</option>
+              ))}
+            </select>
           </div>
-          <select
-            className="px-4 py-2 bg-slate-800/50 border border-slate-700 rounded-lg 
-                     focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white
-                     backdrop-blur-lg"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-          >
-            {categories.map(category => (
-              <option key={category} value={category} className="bg-slate-800">{category}</option>
-            ))}
-          </select>
         </div>
 
-        {/* Tools Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTools.map((tool, index) => (
-            <a
-              key={index}
-              href={tool.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => handleToolClick(tool, e)}
-              className="group bg-slate-800/50 backdrop-blur-lg border border-slate-700 p-6 rounded-lg
-                       hover:bg-slate-700/50 transition-all duration-300 hover:scale-[1.02]
-                       hover:border-blue-500/50"
-            >
-              <div className="flex flex-col gap-2">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors flex items-center gap-2">
-                      {tool.name}
-                      {tool.isFullR1 ? (
-                        <span className="text-xs bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded">
-                          满血R1
-                        </span>
-                      ) : (
-                        <span className="text-xs bg-purple-500/20 text-purple-400 px-2 py-0.5 rounded">
-                          蒸馏版
-                        </span>
-                      )}
-                    </h3>
-                    <p className="mt-1 text-sm text-slate-400">{tool.category}</p>
-                  </div>
-                  <ExternalLink className="text-slate-400 group-hover:text-blue-400 transition-colors" size={20} />
-                </div>
-                
-                <div className="flex items-center gap-4 mt-2">
-                  <div className="flex items-center gap-1">
-                    <Star className="text-yellow-400" size={16} />
-                    <span className="text-sm text-slate-300">{tool.stars.toFixed(1)}</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="text-blue-400" size={16} />
-                    <span className="text-sm text-slate-300">
-                      {tool.users >= 1000 
-                        ? `${(tool.users / 1000).toFixed(1)}k` 
-                        : tool.users}
-                    </span>
-                  </div>
-                </div>
+        {/* 按类别分组展示工具 */}
+        {sortedCategories.length > 0 ? (
+          sortedCategories.map(category => (
+            <div key={category} className="mb-16">
+              <h2 className="text-2xl font-bold text-white mb-8 pb-2 border-b border-slate-800">
+                {category} <span className="text-sm font-normal text-slate-400">({groupedTools[category].length})</span>
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {groupedTools[category].map((tool, index) => (
+                  <a
+                    key={`${category}-${index}`}
+                    href={tool.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => handleToolClick(tool, e)}
+                    className="group bg-slate-900 border border-slate-800 p-6 rounded-xl
+                             hover:bg-slate-800 transition-all duration-300 hover:scale-[1.02]
+                             hover:border-blue-500/30"
+                  >
+                    <div className="flex flex-col gap-2">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="text-lg font-semibold text-white group-hover:text-blue-300 transition-colors flex items-center gap-2">
+                            {tool.name}
+                            {tool.isFullR1 ? (
+                              <span className="text-xs bg-blue-500/10 text-blue-400 px-2 py-0.5 rounded-full">
+                                满血R1
+                              </span>
+                            ) : (
+                              <span className="text-xs bg-purple-500/10 text-purple-400 px-2 py-0.5 rounded-full">
+                                蒸馏版
+                              </span>
+                            )}
+                          </h3>
+                        </div>
+                        <ExternalLink className="text-slate-500 group-hover:text-blue-400 transition-colors" size={18} />
+                      </div>
+                      
+                      <div className="flex items-center gap-4 mt-2">
+                        <div className="flex items-center gap-1">
+                          <Star className="text-yellow-400" size={16} />
+                          <span className="text-sm text-slate-400">{tool.stars.toFixed(1)}</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users className="text-blue-400" size={16} />
+                          <span className="text-sm text-slate-400">
+                            {tool.users >= 1000 
+                              ? `${(tool.users / 1000).toFixed(1)}k` 
+                              : tool.users}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </a>
+                ))}
               </div>
-            </a>
-          ))}
-        </div>
+            </div>
+          ))
+        ) : (
+          <div className="text-center py-16">
+            <p className="text-slate-400 text-lg">没有找到匹配的工具</p>
+          </div>
+        )}
       </main>
 
       {/* Footer with Links */}
-      <footer className="bg-slate-800/50 backdrop-blur-lg border-t border-slate-700 mt-12">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <p className="text-center text-slate-400">© 2024 Deepseek工具站 - 您的AI工具导航</p>
-          <div className="mt-4 text-center text-sm text-slate-500">
-            <a href="#" className="mx-2 hover:text-blue-400">满血R1</a>
-            <a href="#" className="mx-2 hover:text-blue-400">DeepseekV3</a>
-            <a href="#" className="mx-2 hover:text-blue-400">免费AI工具</a>
-            <a href="#" className="mx-2 hover:text-blue-400">直连访问</a>
-            <a href="#" className="mx-2 hover:text-blue-400">中文AI模型</a>
-            <a href="#" className="mx-2 hover:text-blue-400">腾讯元宝</a>
-            <a href="#" className="mx-2 hover:text-blue-400">AskManyAI</a>
-            <a href="#" className="mx-2 hover:text-blue-400">问小白</a>
+      <footer className="bg-black border-t border-slate-800 mt-16 py-12">
+        <div className="max-w-7xl mx-auto px-4">
+          <p className="text-center text-slate-400 mb-6">© 2024 Deepseek工具站 - 您的AI工具导航</p>
+          <div className="flex flex-wrap justify-center gap-4 text-sm">
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">满血R1</a>
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">DeepseekV3</a>
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">免费AI工具</a>
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">直连访问</a>
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">中文AI模型</a>
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">腾讯元宝</a>
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">AskManyAI</a>
+            <a href="#" className="text-slate-500 hover:text-blue-400 transition-colors">问小白</a>
           </div>
         </div>
       </footer>
